@@ -54,3 +54,5 @@ Each line (or group of lines) have a comment in that file explaining it's purpos
 
 - Make this repo public so the `template.rb` file can be referenced by the `.railsrc` file with no modifications (check `.railsrc` notes)
 - Maybe move the script to setup the Mac environment to this repository? That script should take care of setting up rvm, ruby version, and could also copy the `.railsrc` file in the HOME dir
+- Add `next_rails` gem and config for current and master?
+- Maybe ask to select between ombulabs-styleguide, fastruby-styleguide or no styleguide

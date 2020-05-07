@@ -1,0 +1,4 @@
+--skip-bundle
+--skip-test-unit
+--database=postgresql
+-m https://github.com/ombulabs/rails-template/blob/master/template.rb

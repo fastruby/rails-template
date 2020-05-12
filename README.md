@@ -8,7 +8,7 @@ This project provides an `rc` file that you can use when creating new rails proj
 rails new projectname
 ```
 
-If you want to put the `rc` file somewhere else and with another name, you can use the `--rc=path` flag to target that file:
+If you want to put the `rc` file somewhere else and with another name, you can use the `--rc=path` argument to target that file:
 
 ```
 rails new projectname --rc=/some/path/to/myrailsrc

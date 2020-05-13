@@ -30,7 +30,8 @@ This file contains these lines:
 
 ```
 --skip-bundle # don't run bundle, we want to modify the gemfile first
---skip-test-unit # skip minitest gem setup, we are using rspec
+--skip-test # skip minitest gem setup, we are using rspec
+--skip-turbolinks # don't add Turbolinks gem to the project
 --database=postgresql # use postgres instead of sqlite
 -m https://raw.githubusercontent.com/ombulabs/rails-template/master/template.rb # use the template.rb file from this repo
 ```
@@ -49,19 +50,19 @@ This file is references in the `.railsrc` file.
 ### What it does
 
 This file sets a few gems and configure them:
-- ombulabs-styleguide
-- rspec (via rspec-rails)
-- factory_bot
-- simplecov
-- dotenv (via dotenv-rails)
+- [ombulabs-styleguide](https://github.com/ombulabs/styleguide)
+- [rspec](https://relishapp.com/rspec) (via rspec-rails)
+- [factory_bot](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md)
+- [simplecov](https://github.com/colszowka/simplecov)
+- [dotenv](https://github.com/bkeepers/dotenv) (via dotenv-rails)
+- [pagy](https://github.com/ddnexus/pagy)
+- [standard](https://github.com/testdouble/standard)
 
 Each line (or group of lines) have a comment in that file explaining it's purpose.
 
-# Resources
+# More Resources
 
-- Standard: https://github.com/testdouble/standard (check wiki for code editor config)
-- Rspec: https://relishapp.com/rspec
-- Pagy: https://github.com/ddnexus/pagy
+- Standard code editor integration: https://github.com/testdouble/standard/wiki
 
 # TODO
 

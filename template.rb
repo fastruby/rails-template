@@ -1,19 +1,22 @@
 # gemfile already includes rails
-# gemfile already includes capybara
-# gemfile already includes selenium-webdriver
-# gemfile already includes webdrivers
 
 # this is done so it due to a conflict with sass-rails 6 and the styleguide
 gsub_file "Gemfile", /^gem\s+["']sass-rails["'].*$/, 'gem "sass-rails"' # remove version restriction
 gem "ombulabs-styleguide", github: "ombulabs/styleguide", branch: "gh-pages"
 
 # spec related
-gem "rspec-rails", group: "test"
-gem 'factory_bot_rails', group: [:development, :test]
-gem 'simplecov', require: false, group: :test
+gem_group :test do
+  gem "capybara", '>= 2.15'
+  gem "selenium-webdriver"
+  gem "webdrivers"
+  gem "rspec-rails"
+end
 
-# code style
-gem "standard", group: [:development, :test]
+gem_group :development, :test do
+  gem 'factory_bot_rails'
+  gem 'simplecov', require: false
+  gem "standard" # code style
+end
 
 # environment
 gem "dotenv-rails"
@@ -40,10 +43,18 @@ run "mkdir spec/mailers"
 # New folder for factories
 run "mkdir spec/factories"
 
-# Add simplecov configuration
+# Add simplecov and rspec configuration
 inject_into_file "spec/spec_helper.rb", before: "RSpec.configure do |config|\n" do <<-'RUBY'
 require "simplecov"
 SimpleCov.start
+
+RUBY
+end
+
+# Add simplecov and rspec configuration
+inject_into_file "spec/rails_helper.rb", before: "require 'rspec/rails'\n" do <<-'RUBY'
+require 'capybara/rails'
+Capybara.server = :puma, { Silent: true }
 
 RUBY
 end

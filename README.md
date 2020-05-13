@@ -48,14 +48,12 @@ This file is references in the `.railsrc` file.
 
 ### What it does
 
-This file sets a few gems:
+This file sets a few gems and configure them:
 - ombulabs-styleguide
 - rspec (via rspec-rails)
 - factory_bot
 - simplecov
 - dotenv (via dotenv-rails)
-
-Also configures rspec and simplecov.
 
 Each line (or group of lines) have a comment in that file explaining it's purpose.
 
@@ -63,6 +61,7 @@ Each line (or group of lines) have a comment in that file explaining it's purpos
 
 - Standard: https://github.com/testdouble/standard (check wiki for code editor config)
 - Rspec: https://relishapp.com/rspec
+- Pagy: https://github.com/ddnexus/pagy
 
 # TODO
 

@@ -18,6 +18,9 @@ gem "standard", group: [:development, :test]
 # environment
 gem "dotenv-rails"
 
+# pagination
+gem 'pagy', '~> 3.8'
+
 # Install everything
 run "bundle install"
 
@@ -55,6 +58,21 @@ end
 
 RUBY
 end
+
+# include Pagy helpers and create initializer
+inject_into_file 'app/controllers/application_controller.rb', after: "class ApplicationController < ActionController::Base\n" do <<-'RUBY'
+  include Pagy::Backend
+RUBY
+end
+
+inject_into_file 'app/helpers/application_helper.rb', after: "module ApplicationHelper\n" do <<-'RUBY'
+  include Pagy::Frontend
+RUBY
+end
+
+initializer "pagy.rb", <<-CODE
+# copy https://github.com/ddnexus/pagy/blob/3.8.1/lib/config/pagy.rb here and customize if needed
+CODE
 
 # Show a message to the developer for code editor linter config
 puts "#####################"

@@ -49,7 +49,13 @@ curl -o ~/.railsrc https://raw.githubusercontent.com/fastruby/rails-template/mas
 
 This file is a [Rails Application Tempalte](https://guides.rubyonrails.org/rails_application_templates.html) so we can configure how `rails new` behaves.
 
-This file is references in the `.railsrc` file.
+### Usage
+
+This file is referenced in the `.railsrc` file so it's used by default in that case. If you are not using the `.railsrc` file but still want to use the template, use this option when creating a new Rails project:
+
+```
+rails new PROJECT_NAME -m https://raw.githubusercontent.com/fastruby/rails-template/master/template.rb
+```
 
 ### What it Does
 

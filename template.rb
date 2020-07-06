@@ -70,6 +70,14 @@ end
 RUBY
 end
 
+# Add styleguide css
+inside('app/assets/stylesheets') do
+  run "mv application.css application.scss"
+  append_to_file 'application.scss' do
+    '@import "ombulabs/styleguide";'
+  end
+end
+
 # include Pagy helpers and create initializer
 inject_into_file 'app/controllers/application_controller.rb', after: "class ApplicationController < ActionController::Base\n" do <<-'RUBY'
   include Pagy::Backend

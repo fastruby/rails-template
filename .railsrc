@@ -2,4 +2,4 @@
 --skip-test
 --skip-turbolinks
 --database=postgresql
--m https://github.com/ombulabs/rails-template/blob/master/template.rb
+-m https://raw.githubusercontent.com/fastruby/rails-template/master/template.rb

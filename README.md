@@ -1,4 +1,4 @@
-This includes scripts, templates and links to set up a development environment
+This includes scripts, templates and links to setup a Rails project.
 
 # Usage
 
@@ -8,7 +8,7 @@ This project provides an `rc` file that you can use when creating new rails proj
 rails new projectname
 ```
 
-If you want to put the `rc` file somewhere else and with another name, you can use the `--rc=path` argument to target that file:
+If you want to put the `rc` file somewhere else and with another name, you can use the `--rc=path` option to target that file:
 
 ```
 rails new projectname --rc=/some/path/to/myrailsrc
@@ -16,15 +16,15 @@ rails new projectname --rc=/some/path/to/myrailsrc
 
 ### Notes
 
-- You can use any standard `rails new` command arguments (run `rails new --help` for more)
-- You can still override the predefined `.railsrc` arguments. If, for example, you want to use MySQL, you can still do `rails new some_project --database=mysql` that will override the default
-- The `rc` file can be ignored completely using the flag `--no-rc` in case you want to ignore all the defaults for a given project (`rails new some_project --no-rc`)
+- You can use any standard `rails new` command options (run `rails new --help` for details)
+- You can still override the options defined in the `.railsrc` file. If, for example, you want to use MySQL, you can still do `rails new some_project --database=mysql` that will override the default
+- The `rc` file can be ignored completely using the option `--no-rc` in case you want to ignore all the defaults for a given project (`rails new some_project --no-rc`)
 
 # .railsrc
 
-The file includes different arguments that will be used as default for things that can't be properly configured with a rails-template. Each argument goes in a new line.
+The file includes default options that will be used when creating a new rails app. These options cannot be handled by a Rails Application Template, both the RC file and the template are needed. Each option goes in a new line.
 
-### What it does
+### What it Does
 
 This file contains these lines:
 
@@ -36,11 +36,7 @@ This file contains these lines:
 -m https://raw.githubusercontent.com/ombulabs/rails-template/master/template.rb # use the template.rb file from this repo
 ```
 
-### Notes
-
-- Right now the template reference won't work since the project is private, so you have to copy the `template.rb` file somewhere on your computer and fix that path in the `.railsrc` file to actually target that local file or us the `-m` argument manually to override the `.railsrc` template setting (this should just work when we make this public)
-
-### Downloading the file
+### Downloading the File
 
 You can download the file manually or run this cURL command that will download the file into your HOME dir:
 
@@ -55,7 +51,7 @@ This file is a [Rails Application Tempalte](https://guides.rubyonrails.org/rails
 
 This file is references in the `.railsrc` file.
 
-### What it does
+### What it Does
 
 This file sets a few gems and configure them:
 - [ombulabs-styleguide](https://github.com/ombulabs/styleguide)

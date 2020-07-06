@@ -40,6 +40,14 @@ This file contains these lines:
 
 - Right now the template reference won't work since the project is private, so you have to copy the `template.rb` file somewhere on your computer and fix that path in the `.railsrc` file to actually target that local file or us the `-m` argument manually to override the `.railsrc` template setting (this should just work when we make this public)
 
+### Downloading the file
+
+You can download the file manually or run this cURL command that will download the file into your HOME dir:
+
+```
+curl -o ~/.railsrc https://raw.githubusercontent.com/fastruby/rails-template/master/.railsrc
+```
+
 
 # template.rb
 
@@ -67,6 +75,5 @@ Each line (or group of lines) have a comment in that file explaining it's purpos
 # TODO
 
 - Maybe move the script to setup the Mac environment to this repository? That script should take care of setting up rvm, ruby version, and could also copy the `.railsrc` file in the HOME dir
-- Provide a curl/wget command to download the `.railsrc` file into the HOME directory
 - Add `next_rails` gem and config for current and master?
 - Maybe ask to select between ombulabs-styleguide, fastruby-styleguide or no styleguide

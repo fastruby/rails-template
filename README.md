@@ -33,7 +33,7 @@ This file contains these lines:
 --skip-test # skip minitest gem setup, we are using rspec
 --skip-turbolinks # don't add Turbolinks gem to the project
 --database=postgresql # use postgres instead of sqlite
--m https://raw.githubusercontent.com/ombulabs/rails-template/master/template.rb # use the template.rb file from this repo
+-m https://raw.githubusercontent.com/ombulabs/rails-template/main/template.rb # use the template.rb file from this repo
 ```
 
 ### Downloading the File
@@ -41,7 +41,7 @@ This file contains these lines:
 You can download the file manually or run this cURL command that will download the file into your HOME dir:
 
 ```
-curl -o ~/.railsrc https://raw.githubusercontent.com/fastruby/rails-template/master/.railsrc
+curl -o ~/.railsrc https://raw.githubusercontent.com/fastruby/rails-template/main/.railsrc
 ```
 
 
@@ -54,7 +54,7 @@ This file is a [Rails Application Tempalte](https://guides.rubyonrails.org/rails
 This file is referenced in the `.railsrc` file so it's used by default in that case. If you are not using the `.railsrc` file but still want to use the template, use this option when creating a new Rails project:
 
 ```
-rails new PROJECT_NAME -m https://raw.githubusercontent.com/fastruby/rails-template/master/template.rb
+rails new PROJECT_NAME -m https://raw.githubusercontent.com/fastruby/rails-template/main/template.rb
 ```
 
 ### What it Does

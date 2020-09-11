@@ -93,6 +93,8 @@ initializer "pagy.rb", <<-CODE
 # copy https://github.com/ddnexus/pagy/blob/3.8.1/lib/config/pagy.rb here and customize if needed
 CODE
 
+rake "webpacker:install"
+
 # Show a message to the developer for code editor linter config
 puts "#####################"
 puts ""

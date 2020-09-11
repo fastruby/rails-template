@@ -1,5 +1,9 @@
 This includes scripts, templates and links to setup a Rails project.
 
+## Requirements
+
+For newer Rails applications, the default JS assets manager is Webpack (through the Webpacker gem), so any modern Rails app requires [Yarn](https://classic.yarnpkg.com/en/docs/install) as a dependency.
+
 # Usage
 
 This project provides an `rc` file that you can use when creating new rails projects with some defaults. If you put the `.railsrc` file in your HOME directory, you can simply run the `rails new` command and it will use that file's content:

@@ -115,6 +115,10 @@ rake "webpacker:install"
 
 run "rm .ruby-version"
 
+[".nvmrc", ".node-version"].each do |file_name|
+  create_file(file_name, "12.18.3\n", verbose: false)
+end
+
 # Show a message to the developer for code editor linter config
 puts "#####################"
 puts ""

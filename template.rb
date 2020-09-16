@@ -86,7 +86,7 @@ end
 RUBY
 end
 
-# Add styleguides' css
+# Add styleguides' css if present
 if styleguide
   inside('app/assets/stylesheets') do
     run "mv application.css application.scss"
@@ -111,12 +111,37 @@ initializer "pagy.rb", <<-CODE
 # copy https://github.com/ddnexus/pagy/blob/3.8.1/lib/config/pagy.rb here and customize if needed
 CODE
 
+# install webpacker
 rake "webpacker:install"
 
-run "rm .ruby-version"
+# remove the .ruby-version file to use the version from the Gemfile
+run "mv .ruby-version .ruby-version.sample"
 
-[".nvmrc", ".node-version"].each do |file_name|
-  create_file(file_name, "12.18.3\n", verbose: false)
+# make bin/setup run yarn
+gsub_file "bin/setup", "# system('bin/yarn')", "system('bin/yarn')"
+
+inject_into_file 'bin/setup', after: "system('bin/yarn')\n" do <<-'RUBY'
+  # sets a specific version of node that we know works fine with webpacker
+  # you can remove it if you need to
+  [".nvmrc", ".node-version"].each do |file_name|
+    File.open(file_name, "w") do |f|
+      f.write "12.18.3\n"
+    end
+  end
+
+  # sets the .ruby-version file, RVM prioritizes this instead of the Gemfile
+  # can be removed
+  FileUtils.cp ".ruby-version.sample", ".ruby-version"
+RUBY
+end
+
+# ignore some files for git
+append_file '.gitignore' do <<-'GIT'
+.ruby-version.sample
+.ruby-version
+.nvmrc
+.node-version
+GIT
 end
 
 # Show a message to the developer for code editor linter config

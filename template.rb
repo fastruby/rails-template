@@ -1,8 +1,23 @@
 # gemfile already includes rails
 
+puts "Which style guide do you want to use? (default: ombulabs)"
+styleguide_answer = ask("Possible values: (o)mbulabs, (n)one")
+styleguide =
+  case styleguide_answer.downcase
+  when "n", "none" then nil
+  when "o", "ombulabs", "" then "ombulabs"
+  else
+    puts "Unknown styleguide: '#{styleguide_answer}'"
+  end
+
 # this is done so it due to a conflict with sass-rails 6 and the styleguide
 gsub_file "Gemfile", /^gem\s+["']sass-rails["'].*$/, 'gem "sass-rails"' # remove version restriction
-gem "ombulabs-styleguide", github: "ombulabs/styleguide", branch: "gh-pages"
+
+if styleguide == "ombulabs"
+  gem "ombulabs-styleguide", github: "ombulabs/styleguide", branch: "gh-pages"
+# elsif styleguide == "fastruby"
+#   gem "fastruby-styleguide", github: "fastruby/styleguide", branch: "gh-pages"
+end
 
 # spec related
 gem_group :test do
@@ -70,11 +85,14 @@ end
 RUBY
 end
 
-# Add styleguide css
-inside('app/assets/stylesheets') do
-  run "mv application.css application.scss"
-  append_to_file 'application.scss' do
-    '@import "ombulabs/styleguide";'
+run "mv application.css application.scss"
+
+# Add styleguides' css
+if styleguide
+  inside('app/assets/stylesheets') do
+    append_to_file 'application.scss' do
+      %W(@import "#{styleguide}/styleguide";)
+    end
   end
 end
 

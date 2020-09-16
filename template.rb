@@ -1,7 +1,8 @@
 # gemfile already includes rails
 
 puts "Which style guide do you want to use? (default: ombulabs)"
-styleguide_answer = ask("Possible values: (o)mbulabs, (n)one")
+puts "Possible values: 'o', 'ombulabs', 'n', 'none', leave empty"
+styleguide_answer = ask("Use: ")
 styleguide =
   case styleguide_answer.downcase
   when "n", "none" then nil
@@ -85,13 +86,12 @@ end
 RUBY
 end
 
-run "mv application.css application.scss"
-
 # Add styleguides' css
 if styleguide
   inside('app/assets/stylesheets') do
+    run "mv application.css application.scss"
     append_to_file 'application.scss' do
-      %W(@import "#{styleguide}/styleguide";)
+      %Q(@import "#{styleguide}/styleguide";)
     end
   end
 end

@@ -113,6 +113,8 @@ CODE
 
 rake "webpacker:install"
 
+run "rm .ruby-version"
+
 # Show a message to the developer for code editor linter config
 puts "#####################"
 puts ""

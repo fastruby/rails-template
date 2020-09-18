@@ -11,7 +11,7 @@ styleguide =
     puts "Unknown styleguide: '#{styleguide_answer}'"
   end
 
-# this is done so it due to a conflict with sass-rails 6 and the styleguide
+# this is done due to a conflict with sass-rails 6 and the styleguide
 gsub_file "Gemfile", /^gem\s+["']sass-rails["'].*$/, 'gem "sass-rails"' # remove version restriction
 
 if styleguide == "ombulabs"
@@ -20,7 +20,7 @@ if styleguide == "ombulabs"
 #   gem "fastruby-styleguide", github: "fastruby/styleguide", branch: "gh-pages"
 end
 
-# spec related
+# spec  and linter related
 gem_group :test do
   gem "capybara", '>= 2.15'
   gem "selenium-webdriver"
@@ -124,6 +124,10 @@ run "mv .ruby-version .ruby-version.sample"
 gsub_file "bin/setup", "# system('bin/yarn')", "system('bin/yarn')"
 
 inject_into_file 'bin/setup', after: "system('bin/yarn')\n" do <<-'RUBY'
+
+  # Install overcommit hooks
+  system('overcommit --install')
+
   # sets a specific version of node that we know works fine with webpacker
   # you can remove it if you need to
   [".nvmrc", ".node-version"].each do |file_name|

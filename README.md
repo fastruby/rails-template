@@ -37,6 +37,7 @@ This file contains these lines:
 --skip-test # skip minitest gem setup, we are using rspec
 --skip-turbolinks # don't add Turbolinks gem to the project
 --database=postgresql # use postgres instead of sqlite
+--skip-webpack-install # skip webpacker install, we want to run this in a particular order
 -m https://raw.githubusercontent.com/ombulabs/rails-template/main/template.rb # use the template.rb file from this repo
 ```
 
@@ -51,7 +52,7 @@ curl -o ~/.railsrc https://raw.githubusercontent.com/fastruby/rails-template/mai
 
 # template.rb
 
-This file is a [Rails Application Tempalte](https://guides.rubyonrails.org/rails_application_templates.html) so we can configure how `rails new` behaves.
+This file is a [Rails Application Template](https://guides.rubyonrails.org/rails_application_templates.html) so we can configure how `rails new` behaves.
 
 ### Usage
 
@@ -70,9 +71,22 @@ This file sets a few gems and configure them:
 - [simplecov](https://github.com/colszowka/simplecov)
 - [dotenv](https://github.com/bkeepers/dotenv) (via dotenv-rails)
 - [pagy](https://github.com/ddnexus/pagy)
-- [standard](https://github.com/testdouble/standard)
+- [standardrb](https://github.com/testdouble/standard)
+- [reek](https://github.com/troessner/reek)
+- [rails_best_practices](https://github.com/flyerhzm/rails_best_practices)
+- [overcommit](https://github.com/sds/overcommit)
 
-Each line (or group of lines) have a comment in that file explaining it's purpose.
+Each line (or group of lines) have a comment in that file explaining its purpose.
+
+As a summary, it sets gems related to the styleguide, for tests, for linters and code quality and modifies config files.
+
+# Important
+
+We don't want the linters to run for all the rails generated files (many of them won't pass the linter's checks but we don't want to modify internal files), so you can commit all the files before running the bin/setup script (overcommit won't be installed yet) or, if already run, you should disable it for the initial commit. To do so run:
+
+```bash
+OVERCOMMIT_DISABLE=1 git commit -a -m "Initial commit"
+```
 
 # More Resources
 

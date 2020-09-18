@@ -2,4 +2,5 @@
 --skip-test
 --skip-turbolinks
 --database=postgresql
+--skip-webpack-install
 -m https://raw.githubusercontent.com/fastruby/rails-template/main/template.rb

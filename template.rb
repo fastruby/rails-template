@@ -31,7 +31,10 @@ end
 gem_group :development, :test do
   gem 'factory_bot_rails'
   gem 'simplecov', require: false
-  gem "standard" # code style
+  gem "standard" # code style linter
+  gem "reek" # code smells linter
+  gem "rails_best_practices" # rails bad practices linter
+  gem 'overcommit' # run linters when trying to commit
 end
 
 # environment
@@ -135,6 +138,81 @@ inject_into_file 'bin/setup', after: "system('bin/yarn')\n" do <<-'RUBY'
 RUBY
 end
 
+# add suggested reek config for Rails applications
+create_file ".reek.yml" do <<-'YML'
+directories:
+  "app/controllers":
+    IrresponsibleModule:
+      enabled: false
+    NestedIterators:
+      max_allowed_nesting: 2
+    UnusedPrivateMethod:
+      enabled: false
+    InstanceVariableAssumption:
+      enabled: false
+    TooManyInstanceVariables:
+      enabled: false
+  "app/helpers":
+    IrresponsibleModule:
+      enabled: false
+    UtilityFunction:
+      enabled: false
+  "app/mailers":
+    InstanceVariableAssumption:
+      enabled: false
+  "app/models":
+    InstanceVariableAssumption:
+      enabled: false
+YML
+end
+
+# add config for Overcommit (set it to do a few checks and run standardrb, reek and rails_best_practices)
+create_file ".overcommit.yml" do <<-'YML'
+CommitMsg:
+  CapitalizedSubject:
+    enabled: false
+
+  EmptyMessage:
+    enabled: false
+
+  TrailingPeriod:
+    enabled: true
+
+  TextWidth:
+    enabled: false
+
+PreCommit:
+  ALL:
+    on_warn: fail
+
+  AuthorEmail:
+    enabled: true
+
+  AuthorName:
+    enabled: true
+
+  MergeConflicts:
+    enabled: true
+
+  YamlSyntax:
+    enabled: true
+
+  BundleCheck:
+    enabled: true
+
+  RuboCop:
+    enabled: true
+    command: ["bundle", "exec", "standardrb"]
+
+  Reek:
+    enabled: true
+
+  RailsBestPractices:
+    enabled: true
+
+YML
+end
+
 # ignore some files for git
 append_file '.gitignore' do <<-'GIT'
 .ruby-version.sample
@@ -147,7 +225,11 @@ end
 # Show a message to the developer for code editor linter config
 puts "#####################"
 puts ""
-puts "To use Standard code style linter:"
+puts "To use Standard code style linter in your browser:"
 puts "Go to https://github.com/testdouble/standard#how-do-i-run-standard-in-my-editor and set up your code editor"
+puts ""
+puts "There's also Reek support for some editor:"
+puts "vscode-ruby extension"
+puts "https://github.com/AtomLinter/linter-reek and others for atom"
 puts ""
 puts "#####################"

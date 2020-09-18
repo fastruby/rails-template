@@ -128,6 +128,9 @@ inject_into_file 'bin/setup', after: "system('bin/yarn')\n" do <<-'RUBY'
   # Install overcommit hooks
   system('overcommit --install')
 
+  # install StandardJS so it can be used by overcommit
+  system('npm install standard --global')
+
   # sets a specific version of node that we know works fine with webpacker
   # you can remove it if you need to
   [".nvmrc", ".node-version"].each do |file_name|
@@ -212,6 +215,9 @@ PreCommit:
     enabled: true
 
   RailsBestPractices:
+    enabled: true
+
+  Standard:
     enabled: true
 
 YML

@@ -219,10 +219,9 @@ end
 
 # ignore some files for git
 append_file '.gitignore' do <<-'GIT'
-.ruby-version.sample
-.ruby-version
 .nvmrc
 .node-version
+.ruby-version
 GIT
 end
 

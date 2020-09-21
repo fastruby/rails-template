@@ -170,6 +170,7 @@ directories:
   "app/models":
     InstanceVariableAssumption:
       enabled: false
+
 YML
 end
 

@@ -32,6 +32,9 @@ gem_group :development, :test do
   gem 'factory_bot_rails'
   gem 'simplecov', require: false
   gem "standard" # code style linter
+  gem "rubocop-rspec" # rspec rules for rubocop
+  gem "rubocop-rails" # rails rules for rubocop
+  gem 'rubocop-ombu_labs', require: false, github: "fastruby/rubocop-ombu_labs", branch: :main
   gem "reek" # code smells linter
   gem "rails_best_practices" # rails bad practices linter
   gem 'overcommit' # run linters when trying to commit
@@ -210,7 +213,6 @@ PreCommit:
 
   RuboCop:
     enabled: true
-    command: ["bundle", "exec", "standardrb"]
 
   Reek:
     enabled: true
@@ -220,6 +222,29 @@ PreCommit:
 
   Standard:
     enabled: true
+
+YML
+end
+
+create_file ".rubocop.yml" do <<~YML
+require:
+  - standard
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-ombu_labs
+
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  NewCops: enable
+
+Rails:
+  Enabled: true
+RSpec:
+  Enabled: true
+OmbuLabs/Branding:
+  Enabled: true
 
 YML
 end
@@ -235,8 +260,8 @@ end
 # Show a message to the developer for code editor linter config
 puts "#####################"
 puts ""
-puts "To use Standard code style linter in your browser:"
-puts "Go to https://github.com/testdouble/standard#how-do-i-run-standard-in-my-editor and set up your code editor"
+puts "We use Rubocop with the StandardRB rules, but need to set rubocop as the linter to be able to use extensions"
+puts "Go to https://docs.rubocop.org/rubocop/0.92/integration_with_other_tools.html and set up your code editor"
 puts ""
 puts "There's also Reek support for some editor:"
 puts "vscode-ruby extension"

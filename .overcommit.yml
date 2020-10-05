@@ -32,7 +32,6 @@ PreCommit:
 
   RuboCop:
     enabled: true
-    command: ["bundle", "exec", "standardrb"]
 
   Reek:
     enabled: true

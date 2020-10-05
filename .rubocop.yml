@@ -1,0 +1,18 @@
+require:
+  - standard
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-ombu_labs
+  
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  NewCops: enable
+
+Rails:
+  Enabled: true
+RSpec:
+  Enabled: true
+OmbuLabs/Branding:
+  Enabled: true

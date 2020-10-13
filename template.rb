@@ -1,30 +1,28 @@
 # gemfile already includes rails
 
 puts "Which style guide do you want to use? (default: ombulabs)"
-puts "Possible values: 'o', 'ombulabs', 'n', 'none', leave empty"
+puts "Possible values: '(o)mbulabs', '(f)astruby', '(n)one', leave empty for (o)mbulabs"
 styleguide_answer = ask("Use: ")
 styleguide =
   case styleguide_answer.downcase
   when "n", "none" then nil
   when "o", "ombulabs", "" then "ombulabs"
+  when "f", "fastruby" then "fastruby"
   else
     puts "Unknown styleguide: '#{styleguide_answer}'"
   end
 
-# this is done due to a conflict with sass-rails 6 and the styleguide
-gsub_file "Gemfile", /^gem\s+["']sass-rails["'].*$/, 'gem "sass-rails"' # remove version restriction
-
 if styleguide == "ombulabs"
+  # this is done due to a conflict with sass-rails 6 and the styleguide gem
+  gsub_file "Gemfile", /^gem\s+["']sass-rails["'].*$/, 'gem "sass-rails"' # remove version restriction
   gem "ombulabs-styleguide", github: "ombulabs/styleguide", branch: "gh-pages"
-# elsif styleguide == "fastruby"
-#   gem "fastruby-styleguide", github: "fastruby/styleguide", branch: "gh-pages"
 end
 
 gem_group :development do
   gem 'guard-rspec', require: false
 end
 
-# spec  and linter related
+# spec and linter related
 gem_group :test do
   gem "capybara", '>= 2.15'
   gem "selenium-webdriver"
@@ -50,7 +48,7 @@ gem "dotenv-rails"
 # pagination
 gem 'pagy', '~> 3.8'
 
-# Install everything
+# Install gems
 run "bundle install"
 
 # Install rspec
@@ -96,12 +94,32 @@ end
 RUBY
 end
 
-# Add styleguides' css if present
-if styleguide
-  inside('app/assets/stylesheets') do
+# Add styleguide's css and js if needed
+case styleguide
+when "ombulabs"
+  inside("app/assets/stylesheets") do
     run "mv application.css application.scss"
-    append_to_file 'application.scss' do
-      %Q(@import "#{styleguide}/styleguide";)
+    append_to_file "application.scss" do
+      %Q(
+@import "ombulabs/styleguide";
+)
+    end
+  end
+when "fastruby"
+  inside("app/assets/stylesheets") do
+    run "mv application.css application.scss"
+    append_to_file "application.scss" do
+      %Q(
+@import "fastruby-io-styleguide";
+)
+    end
+  end
+
+  inside("app/javascript/packs") do
+    append_to_file "application.js" do
+      %Q(
+import "fastruby-io-styleguide"
+)
     end
   end
 end
@@ -124,7 +142,13 @@ CODE
 # install webpacker
 rake "webpacker:install"
 
-system('bundle exec guard init rspec')
+# if styleguide is fastruby, add the yarn package
+if styleguide == "fastruby"
+  system("yarn add fastruby/styleguide#gh-pages")
+end
+
+# init guard with rspec config
+system("bundle exec guard init rspec")
 
 # remove the .ruby-version file to use the version from the Gemfile
 run "mv .ruby-version .ruby-version.sample"
@@ -278,6 +302,6 @@ puts "Go to https://docs.rubocop.org/rubocop/0.92/integration_with_other_tools.h
 puts ""
 puts "There's also Reek support for some editor:"
 puts "vscode-ruby extension"
-puts "https://github.com/AtomLinter/linter-reek and others for atom"
+puts "https://github.com/fastruby/linter-reek and others for atom"
 puts ""
 puts "#####################"

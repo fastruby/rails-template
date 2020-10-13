@@ -123,6 +123,9 @@ rake "webpacker:install"
 # remove the .ruby-version file to use the version from the Gemfile
 run "mv .ruby-version .ruby-version.sample"
 
+# create a sample database.yml instead of a real one
+run "mv config/database.yml config/database.yml.sample"
+
 # make bin/setup run yarn
 gsub_file "bin/setup", "# system('bin/yarn')", "system('bin/yarn')"
 
@@ -145,6 +148,9 @@ inject_into_file 'bin/setup', after: "system('bin/yarn')\n" do <<-'RUBY'
   # sets the .ruby-version file, RVM prioritizes this instead of the Gemfile
   # can be removed
   FileUtils.cp ".ruby-version.sample", ".ruby-version"
+
+  # copy database.yml sample
+  FileUtils.cp "config/database.yml.sample", "config/database.yml"
 RUBY
 end
 
@@ -254,6 +260,7 @@ append_file '.gitignore' do <<-'GIT'
 .nvmrc
 .node-version
 .ruby-version
+/config/database.yml
 GIT
 end
 

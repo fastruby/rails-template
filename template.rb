@@ -20,6 +20,10 @@ if styleguide == "ombulabs"
 #   gem "fastruby-styleguide", github: "fastruby/styleguide", branch: "gh-pages"
 end
 
+gem_group :development do
+  gem 'guard-rspec', require: false
+end
+
 # spec  and linter related
 gem_group :test do
   gem "capybara", '>= 2.15'
@@ -119,6 +123,8 @@ CODE
 
 # install webpacker
 rake "webpacker:install"
+
+system('bundle exec guard init rspec')
 
 # remove the .ruby-version file to use the version from the Gemfile
 run "mv .ruby-version .ruby-version.sample"

@@ -59,6 +59,11 @@ gem "dotenv-rails"
 # pagination
 gem "pagy", "~> 3.8"
 
+
+# DO THIS AFTER ALL GEMS ARE SET
+# Replace 'string' with "string" in the Gemfile so RuboCop is happy
+gsub_file "Gemfile", /'([^']*)'/, '"\1"'
+
 # Install gems
 run "bundle install"
 
@@ -220,7 +225,7 @@ end
 # Show a message to the developer for code editor linter config
 puts "#####################"
 puts ""
-puts "We use Rubocop with the StandardRB rules, but need to set rubocop as the linter to be able to use extensions"
+puts "We use Rubocop with the StandardRB rules, but we need to set RuboCop as the linter to be able to use extensions"
 puts "Go to https://docs.rubocop.org/rubocop/0.92/integration_with_other_tools.html and set up your code editor"
 puts ""
 puts "There's also Reek support for some editor:"

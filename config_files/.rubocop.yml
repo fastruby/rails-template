@@ -2,8 +2,7 @@ require:
   - standard
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-ombu_labs
-  
+
 inherit_gem:
   standard: config/base.yml
 
@@ -14,5 +13,5 @@ Rails:
   Enabled: true
 RSpec:
   Enabled: true
-OmbuLabs/Branding:
-  Enabled: true
+RSpec/MultipleExpectations:
+  Enabled: false

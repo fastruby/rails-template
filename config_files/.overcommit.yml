@@ -41,3 +41,6 @@ PreCommit:
 
   Standard:
     enabled: true
+
+  Branding:
+    enabled: true

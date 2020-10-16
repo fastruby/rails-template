@@ -1,5 +1,15 @@
 # gemfile already includes rails
 
+require "net/http"
+
+# downloads the content of a file from github config_files dir
+# used to copy configuration files like .reek.yml or the branding hook
+def get_gh_file_content(filename)
+  uri = "https://raw.githubusercontent.com/fastruby/rails-template/main/config_files/#{filename}"
+  Net::HTTP.get(URI(uri))
+end
+
+# select which styleguide to use (or none), defaults to ombulabs' one
 puts "Which style guide do you want to use? (default: ombulabs)"
 puts "Possible values: '(o)mbulabs', '(f)astruby', '(n)one', leave empty for (o)mbulabs"
 styleguide_answer = ask("Use: ")
@@ -12,46 +22,47 @@ styleguide =
     puts "Unknown styleguide: '#{styleguide_answer}'"
   end
 
+# setup ombulabs styleguide gem if needed
 if styleguide == "ombulabs"
   # this is done due to a conflict with sass-rails 6 and the styleguide gem
   gsub_file "Gemfile", /^gem\s+["']sass-rails["'].*$/, 'gem "sass-rails"' # remove version restriction
   gem "ombulabs-styleguide", github: "ombulabs/styleguide", branch: "gh-pages"
 end
 
+# add other gems
 gem_group :development do
-  gem 'guard-rspec', require: false
+  gem "guard-rspec", require: false
 end
 
 # spec and linter related
 gem_group :test do
-  gem "capybara", '>= 2.15'
+  gem "capybara", ">= 2.15"
   gem "selenium-webdriver"
   gem "webdrivers"
   gem "rspec-rails"
 end
 
 gem_group :development, :test do
-  gem 'factory_bot_rails'
-  gem 'simplecov', require: false
+  gem "factory_bot_rails"
+  gem "simplecov", require: false
   gem "standard" # code style linter
   gem "rubocop-rspec" # rspec rules for rubocop
   gem "rubocop-rails" # rails rules for rubocop
-  gem 'rubocop-ombu_labs', require: false, github: "fastruby/rubocop-ombu_labs", branch: :main
   gem "reek" # code smells linter
   gem "rails_best_practices" # rails bad practices linter
-  gem 'overcommit' # run linters when trying to commit
+  gem "overcommit", "0.57.0" # run linters when trying to commit
 end
 
 # environment
 gem "dotenv-rails"
 
 # pagination
-gem 'pagy', '~> 3.8'
+gem "pagy", "~> 3.8"
 
 # Install gems
 run "bundle install"
 
-# Install rspec
+# Setup RSpec and test related config
 generate "rspec:install"
 
 # Set up the spec folders for RSpec
@@ -77,16 +88,16 @@ end
 
 # Add simplecov and rspec configuration
 inject_into_file "spec/rails_helper.rb", before: "require 'rspec/rails'\n" do <<-'RUBY'
-require 'capybara/rails'
+require "capybara/rails"
 Capybara.server = :puma, { Silent: true }
 
 RUBY
 end
 
 # Add `rails spec` task to run our tests
-inject_into_file 'Rakefile', before: "Rails.application.load_tasks\n" do <<-'RUBY'
+inject_into_file "Rakefile", before: "Rails.application.load_tasks\n" do <<-'RUBY'
 begin
-  require 'rspec/core/rake_task'
+  require "rspec/core/rake_task"
   RSpec::Core::RakeTask.new(:spec)
 rescue LoadError
 end
@@ -125,12 +136,12 @@ import "fastruby-io-styleguide"
 end
 
 # include Pagy helpers and create initializer
-inject_into_file 'app/controllers/application_controller.rb', after: "class ApplicationController < ActionController::Base\n" do <<-'RUBY'
+inject_into_file "app/controllers/application_controller.rb", after: "class ApplicationController < ActionController::Base\n" do <<-'RUBY'
   include Pagy::Backend
 RUBY
 end
 
-inject_into_file 'app/helpers/application_helper.rb', after: "module ApplicationHelper\n" do <<-'RUBY'
+inject_into_file "app/helpers/application_helper.rb", after: "module ApplicationHelper\n" do <<-'RUBY'
   include Pagy::Frontend
 RUBY
 end
@@ -142,7 +153,7 @@ CODE
 # install webpacker
 rake "webpacker:install"
 
-# if styleguide is fastruby, add the yarn package
+# if styleguide is fastruby, add the yarn package too
 if styleguide == "fastruby"
   system("yarn add fastruby/styleguide#gh-pages")
 end
@@ -156,16 +167,17 @@ run "mv .ruby-version .ruby-version.sample"
 # create a sample database.yml instead of a real one
 run "mv config/database.yml config/database.yml.sample"
 
-# make bin/setup run yarn
+# make bin/setup run yarn too
 gsub_file "bin/setup", "# system('bin/yarn')", "system('bin/yarn')"
 
-inject_into_file 'bin/setup', after: "system('bin/yarn')\n" do <<-'RUBY'
+# make bin/setup move sample files to new locations
+inject_into_file "bin/setup", after: "system('bin/yarn')\n" do <<-'RUBY'
 
   # Install overcommit hooks
-  system('overcommit --install')
+  system("overcommit --install")
 
   # install StandardJS so it can be used by overcommit
-  system('npm install standard --global')
+  system("npm install standard --global")
 
   # sets a specific version of node that we know works fine with webpacker
   # you can remove it if you need to
@@ -185,108 +197,19 @@ RUBY
 end
 
 # add suggested reek config for Rails applications
-create_file ".reek.yml" do <<-'YML'
-directories:
-  "app/controllers":
-    IrresponsibleModule:
-      enabled: false
-    NestedIterators:
-      max_allowed_nesting: 2
-    UnusedPrivateMethod:
-      enabled: false
-    InstanceVariableAssumption:
-      enabled: false
-    TooManyInstanceVariables:
-      enabled: false
-  "app/helpers":
-    IrresponsibleModule:
-      enabled: false
-    UtilityFunction:
-      enabled: false
-  "app/mailers":
-    InstanceVariableAssumption:
-      enabled: false
-  "app/models":
-    InstanceVariableAssumption:
-      enabled: false
-
-YML
-end
+create_file ".reek.yml", get_gh_file_content(".reek.yml")
 
 # add config for Overcommit (set it to do a few checks and run standardrb, reek and rails_best_practices)
-create_file ".overcommit.yml" do <<-'YML'
-CommitMsg:
-  CapitalizedSubject:
-    enabled: false
+create_file ".overcommit.yml", get_gh_file_content(".overcommit.yml")
 
-  EmptyMessage:
-    enabled: false
+# add RuboCop config
+create_file ".rubocop.yml", get_gh_file_content(".rubocop.yml")
 
-  TrailingPeriod:
-    enabled: true
-
-  TextWidth:
-    enabled: false
-
-PreCommit:
-  ALL:
-    on_warn: fail
-
-  AuthorEmail:
-    enabled: true
-
-  AuthorName:
-    enabled: true
-
-  MergeConflicts:
-    enabled: true
-
-  YamlSyntax:
-    enabled: true
-
-  BundleCheck:
-    enabled: true
-
-  RuboCop:
-    enabled: true
-
-  Reek:
-    enabled: true
-
-  RailsBestPractices:
-    enabled: true
-
-  Standard:
-    enabled: true
-
-YML
-end
-
-create_file ".rubocop.yml" do <<~YML
-require:
-  - standard
-  - rubocop-rails
-  - rubocop-rspec
-  - rubocop-ombu_labs
-
-inherit_gem:
-  standard: config/base.yml
-
-AllCops:
-  NewCops: enable
-
-Rails:
-  Enabled: true
-RSpec:
-  Enabled: true
-OmbuLabs/Branding:
-  Enabled: true
-
-YML
-end
+# adds the branding pre commit hook
+create_file ".git-hooks/pre_commit/branding.rb", get_gh_file_content("branding_pre_commit_hook.rb")
 
 # ignore some files for git
-append_file '.gitignore' do <<-'GIT'
+append_file ".gitignore" do <<-'GIT'
 .nvmrc
 .node-version
 .ruby-version

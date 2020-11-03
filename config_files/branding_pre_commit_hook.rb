@@ -18,7 +18,7 @@ module Overcommit::Hook::PreCommit
 
       File.foreach(filepath).with_index do |line, lineno|
         @current_line = lineno
-        check(line, /ombu\s*labs/i, VALID_OMBULABS)
+        check(line, /omb.\s*labs/i, VALID_OMBULABS)
         check(line, /fastruby/i, VALID_FASTRUBY)
       end
     end

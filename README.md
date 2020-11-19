@@ -74,7 +74,6 @@ This file sets a few gems and tools, and configure them:
 - [rubocop (with standardrb config)](https://github.com/testdouble/standard)
 - [rubocop-ombu_labs](https://github.com/fastruby/rubocop-ombu_labs)
 - [reek](https://github.com/troessner/reek)
-- [rails_best_practices](https://github.com/flyerhzm/rails_best_practices)
 - [overcommit](https://github.com/sds/overcommit)
 - [StandardJS](https://github.com/standard/standard)
 

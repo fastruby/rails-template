@@ -18,8 +18,8 @@ module Overcommit::Hook::PreCommit
 
       File.foreach(filepath).with_index do |line, lineno|
         self.current_line = lineno
-        check(line, /blacklist/i, "disallowed list / disallowed")
-        check(line, /whitelist/i, "allowed list / allowed")
+        check(line, /blacklist/i, "blocklist")
+        check(line, /whitelist/i, "allowlist")
       end
     rescue
       # rescue exception if trying to parse binary files

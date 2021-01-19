@@ -21,6 +21,8 @@ module Overcommit::Hook::PreCommit
         check(line, /omb.\s*labs/i, VALID_OMBULABS)
         check(line, /fastruby/i, VALID_FASTRUBY)
       end
+    rescue
+      # rescue exception if trying to parse binary files
     end
 
     def check(line, regxp, valid_list)

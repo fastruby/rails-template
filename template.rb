@@ -49,7 +49,6 @@ gem_group :development, :test do
   gem "rubocop-rspec" # rspec rules for rubocop
   gem "rubocop-rails" # rails rules for rubocop
   gem "reek" # code smells linter
-  gem "rails_best_practices" # rails bad practices linter
   gem "overcommit", "0.57.0" # run linters when trying to commit
 end
 
@@ -204,7 +203,7 @@ end
 # add suggested reek config for Rails applications
 create_file ".reek.yml", get_gh_file_content(".reek.yml")
 
-# add config for Overcommit (set it to do a few checks and run standardrb, reek and rails_best_practices)
+# add config for Overcommit (set it to do a few checks and run standardrb and reek)
 create_file ".overcommit.yml", get_gh_file_content(".overcommit.yml")
 
 # add RuboCop config

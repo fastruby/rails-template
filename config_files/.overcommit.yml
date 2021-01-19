@@ -36,9 +36,6 @@ PreCommit:
   Reek:
     enabled: true
 
-  RailsBestPractices:
-    enabled: true
-
   Standard:
     enabled: true
 

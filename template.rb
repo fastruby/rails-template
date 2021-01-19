@@ -213,6 +213,9 @@ create_file ".rubocop.yml", get_gh_file_content(".rubocop.yml")
 # adds the branding pre commit hook
 create_file ".git-hooks/pre_commit/branding.rb", get_gh_file_content("branding_pre_commit_hook.rb")
 
+# adds the wording pre commit hook
+create_file ".git-hooks/pre_commit/wording.rb", get_gh_file_content("wording_pre_commit_hook.rb")
+
 # ignore some files for git
 append_file ".gitignore" do <<-'GIT'
 .nvmrc

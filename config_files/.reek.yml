@@ -27,3 +27,6 @@ directories:
   "app/models":
     InstanceVariableAssumption:
       enabled: false
+
+Attribute:
+  enabled: false

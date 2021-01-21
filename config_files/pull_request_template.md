@@ -12,11 +12,11 @@ Please include a summary of the change and which issue is fixed or which feature
 
 **Screenshots:**
 
-If changes to the UI are made, please include screenshots of the before and after. 
+If changes to the UI are made, please include screenshots of the before and after.
 
-**Related story:**
+**Related story/GitHub issue:**
 
-Link to the relevant story in Pivotal Tracker.
+Link to the relevant story in Pivotal Tracker or issue in GitHub
 
 **Related links (if applicable):**
 

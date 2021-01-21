@@ -36,3 +36,6 @@ directories:
       enabled: false
     IrresponsibleModule:
       enabled: false
+
+Attribute:
+  enabled: false

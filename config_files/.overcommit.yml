@@ -41,3 +41,6 @@ PreCommit:
 
   Branding:
     enabled: true
+
+  Wording:
+    enabled: true

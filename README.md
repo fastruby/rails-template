@@ -98,3 +98,18 @@ OVERCOMMIT_DISABLE=1 git commit -a -m "Initial commit"
 - Maybe move the script to setup the Mac environment to this repository? That script should take care of setting up rvm, ruby version, and could also copy the `.railsrc` file in the HOME dir
 - Add `next_rails` gem and config for current and master?
 - Maybe ask to select between ombulabs-styleguide, fastruby-styleguide or no styleguide
+
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at [https://github.com/fastruby/rails-template](https://github.com/fastruby/rails-template). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+When Submitting a Pull Request:
+
+* If your PR closes any open GitHub issues, please include `Closes #XXXX` in your comment
+
+* Please include a summary of the change and which issue is fixed or which feature is introduced.
+
+* If changes to the behavior are made, clearly describe what changes.
+
+* If changes to the UI are made, please include screenshots of the before and after.

@@ -5,6 +5,8 @@ module Overcommit::Hook::PreCommit
     VALID_OMBULABS = [/OmbuLabs/, /www\.ombulabs\.com/, /ombulabs\//, /ombulabs-styleguide/, /ombu_labs/, /github\.com\/ombulabs/]
     VALID_FASTRUBY = [/FastRuby\.io/, /https?:\/\/\S*fastruby\S*\.io/, /fastruby[\/:]/, /fastruby-io-styleguide/]
 
+    IGNORE_FILES = ["branding.rb", "schema.rb", "database.yml", ".env.sample", "circleci", "package.json", "app.json", "cable.yml"]
+
     def run
       applicable_files.each { |file| check_file(file) }
 
@@ -14,6 +16,8 @@ module Overcommit::Hook::PreCommit
     end
 
     def check_file(filepath)
+      return if IGNORE_FILES.any? { |ignored| filepath.include?(ignored) }
+
       @current_file = filepath
 
       File.foreach(filepath).with_index do |line, lineno|

@@ -18,7 +18,7 @@ assignees: 'black-bunny-brigade'
 
 **Version, Branch, or Commit:**
 
-Inform what version, branch, commit of Skunk you are using.
+Inform what version, branch, commit of the project you are using.
 
 **Expected behavior:**
 

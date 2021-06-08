@@ -17,7 +17,7 @@ assignees: ''
 
 **Branch/Commit:**
 
-Inform what branch/commit/version of "Skunk" you are using.
+Inform what branch/commit/version of the project you are using.
 
 **Describe the feature:**
 

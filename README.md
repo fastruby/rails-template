@@ -113,3 +113,8 @@ When Submitting a Pull Request:
 * If changes to the behavior are made, clearly describe what changes.
 
 * If changes to the UI are made, please include screenshots of the before and after.
+
+
+## Code of Conduct
+
+Everyone interacting in the `rails-template` project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).

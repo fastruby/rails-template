@@ -54,6 +54,8 @@ end
 
 # environment
 gem "dotenv-rails"
+gem "dotenv_validator"
+initializer '1_dotenv_validator.rb', "DotenvValidator.check!"
 
 # pagination
 gem "pagy", "~> 3.8"

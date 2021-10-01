@@ -54,6 +54,8 @@ end
 
 # environment
 gem "dotenv-rails"
+gem "dotenv_validator"
+initializer '1_dotenv_validator.rb', "DotenvValidator.check!"
 
 # pagination
 gem "pagy", "~> 3.8"
@@ -175,7 +177,7 @@ run "mv config/database.yml config/database.yml.sample"
 gsub_file "bin/setup", "# system('bin/yarn')", "system('bin/yarn')"
 
 # make bin/setup move sample files to new locations
-inject_into_file "bin/setup", after: "system('bin/yarn')\n" do <<-'RUBY'
+inject_into_file "bin/setup", after: %r{system!?.'bin/yarn'.?\n} do <<-'RUBY'
 
   # Install overcommit hooks
   system("overcommit --install")
@@ -197,6 +199,11 @@ inject_into_file "bin/setup", after: "system('bin/yarn')\n" do <<-'RUBY'
 
   # copy database.yml sample
   FileUtils.cp "config/database.yml.sample", "config/database.yml"
+
+  # copy .env.sample if the .env is missing
+  unless File.exist?(".env")
+    FileUtils.cp ".env.sample", ".env"
+  end
 RUBY
 end
 

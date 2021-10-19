@@ -227,6 +227,7 @@ create_file ".github/pull_request_template.md", get_gh_file_content("pull_reques
 
 # ignore some files for git
 append_file ".gitignore" do <<-'GIT'
+.env
 .nvmrc
 .node-version
 .ruby-version

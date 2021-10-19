@@ -235,6 +235,9 @@ append_file ".gitignore" do <<-'GIT'
 GIT
 end
 
+# Stop spring to clear the preloded cache 
+run "bundle exec spring stop"
+
 # Show a message to the developer for code editor linter config
 puts "#####################"
 puts ""

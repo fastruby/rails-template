@@ -200,12 +200,16 @@ inject_into_file "bin/setup", after: %r{system!?.'bin/yarn'.?\n} do <<-'RUBY'
   # copy database.yml sample
   FileUtils.cp "config/database.yml.sample", "config/database.yml"
 
-  # copy .env.sample if the .env is missing
-  unless File.exist?(".env")
-    FileUtils.cp ".env.sample", ".env"
+  # copy .env file
+  unless File.exist?(".env") 
+    puts "\n== Copying .env file"
+    FileUtils.cp ".env.sample", ".env" 
   end
 RUBY
 end
+
+# add a blank .env.sample file
+create_file ".env.sample"
 
 # add suggested reek config for Rails applications
 create_file ".reek.yml", get_gh_file_content(".reek.yml")

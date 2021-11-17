@@ -50,6 +50,7 @@ gem_group :development, :test do
   gem "rubocop-rails" # rails rules for rubocop
   gem "reek" # code smells linter
   gem "overcommit", "0.57.0" # run linters when trying to commit
+  gem "next_rails"
 end
 
 # environment
@@ -207,6 +208,23 @@ inject_into_file "bin/setup", after: %r{system!?.'bin/yarn'.?\n} do <<-'RUBY'
   end
 RUBY
 end
+
+# Initialize Gemfile.next for dual boot
+run "next --init"
+
+# Add dual-boot in Gemfile 
+next_gem = '''
+if next?
+  gem "rails", github: "rails/rails", branch: "main"
+else
+  gem "rails"
+end
+'''
+
+# Update Gemfile
+gsub_file("Gemfile", /^gem\s+["']rails["'].*$/, next_gem)
+
+run "next bundle install"
 
 # add a blank .env.sample file
 create_file ".env.sample"

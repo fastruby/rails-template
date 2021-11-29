@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      RAILS_ENV: test
       DATABASE_URL: "postgres://postgres:postgres@localhost/test_app_test"
     
     services:
@@ -28,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Install PostgreSQL 11 client
         run: |
@@ -38,14 +37,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.0.2"
-      
+          bundler-cache: true 
+
+      - name: YARN install
+        uses: bahmutov/npm-install@v1
+
       - name: Build App
         run: |
-          yarn install
-          bundle install
-          cp config/database.yml.sample config/database.yml
           bundle exec rails db:setup
-
+          
       - name: Run RSpec
         run: |
-          bundle exec rspec
+          bundle exec rails spec

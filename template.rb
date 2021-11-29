@@ -227,7 +227,7 @@ create_file ".git-hooks/pre_commit/branding.rb", get_gh_file_content("branding_p
 create_file ".git-hooks/pre_commit/wording.rb", get_gh_file_content("wording_pre_commit_hook.rb")
 
 # adds the github action for rspec
-create_file ".github/workflows/main.yml", get_gh_file_content("github_actions_main.rb")
+create_file ".github/workflows/main.yml", get_gh_file_content("github_actions_main.yml")
 
 # adds x86_64-linux platform in the Gemfile.lock
 run "bundle lock --add-platform x86_64-linux"

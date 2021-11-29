@@ -217,12 +217,13 @@ next_gem = '''
 if next?
   gem "rails", github: "rails/rails", branch: "main"
 else
-  gem "rails"
+  gem "rails", \1
 end
 '''
 
 # Update Gemfile
-gsub_file("Gemfile", /^gem\s+["']rails["'].*$/, next_gem)
+# gsub_file("Gemfile", /^gem\s+["']rails["'].*$/, next_gem)
+gsub_file("Gemfile", /^gem\s+["']rails["'],\s+(["'].*["']).*$/, next_gem)
 
 run "next bundle install"
 

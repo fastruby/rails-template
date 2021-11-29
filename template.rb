@@ -229,6 +229,9 @@ create_file ".git-hooks/pre_commit/wording.rb", get_gh_file_content("wording_pre
 # adds the github action for rspec
 create_file ".github/workflows/main.yml", get_gh_file_content("github_actions_main.rb")
 
+# adds x86_64-linux platform in the Gemfile.lock
+run "bundle lock --add-platform x86_64-linux"
+
 # add PR template
 create_file ".github/pull_request_template.md", get_gh_file_content("pull_request_template.md")
 

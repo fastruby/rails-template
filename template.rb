@@ -228,6 +228,7 @@ create_file ".git-hooks/pre_commit/wording.rb", get_gh_file_content("wording_pre
 
 # adds the github action for rspec
 create_file ".github/workflows/main.yml", get_gh_file_content("github_actions_main.yml")
+create_file ".github/workflows/rails_next.yml", get_gh_file_content("github_actions_rails_next.yml")
 
 # adds x86_64-linux platform in the Gemfile.lock
 run "bundle lock --add-platform x86_64-linux"

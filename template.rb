@@ -226,6 +226,13 @@ create_file ".git-hooks/pre_commit/branding.rb", get_gh_file_content("branding_p
 # adds the wording pre commit hook
 create_file ".git-hooks/pre_commit/wording.rb", get_gh_file_content("wording_pre_commit_hook.rb")
 
+# adds the github action for rspec
+create_file ".github/workflows/main.yml", get_gh_file_content("github_actions_main.yml")
+create_file ".github/workflows/rails_next.yml", get_gh_file_content("github_actions_rails_next.yml")
+
+# adds x86_64-linux platform in the Gemfile.lock
+run "bundle lock --add-platform x86_64-linux"
+
 # add PR template
 create_file ".github/pull_request_template.md", get_gh_file_content("pull_request_template.md")
 

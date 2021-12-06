@@ -59,8 +59,7 @@ gem "dotenv_validator"
 initializer '1_dotenv_validator.rb', "DotenvValidator.check!"
 
 # pagination
-gem "pagy", "~> 3.8"
-
+gem "pagy"
 
 # DO THIS AFTER ALL GEMS ARE SET
 # Replace 'string' with "string" in the Gemfile so RuboCop is happy

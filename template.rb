@@ -237,6 +237,7 @@ create_file ".overcommit.yml", get_gh_file_content(".overcommit.yml")
 
 # add RuboCop config
 create_file ".rubocop.yml", get_gh_file_content(".rubocop.yml")
+run "rubocop -A"
 
 # adds the branding pre commit hook
 create_file ".git-hooks/pre_commit/branding.rb", get_gh_file_content("branding_pre_commit_hook.rb")

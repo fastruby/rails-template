@@ -237,7 +237,6 @@ create_file ".overcommit.yml", get_gh_file_content(".overcommit.yml")
 
 # add RuboCop config
 create_file ".rubocop.yml", get_gh_file_content(".rubocop.yml")
-run "rubocop -A"
 
 # adds the branding pre commit hook
 create_file ".git-hooks/pre_commit/branding.rb", get_gh_file_content("branding_pre_commit_hook.rb")
@@ -267,6 +266,10 @@ end
 
 # Stop spring to clear the preloded cache 
 run "bundle exec spring stop"
+
+# Fix Rubocop Offences
+gsub_file("config/environments/development.rb", "Rails.root.join\('tmp', 'caching-dev.txt'\).exist\?", 'Rails.root.join("tmp/caching-dev.txt").exist?')
+run "rubocop -A"
 
 # Show a message to the developer for code editor linter config
 puts "#####################"

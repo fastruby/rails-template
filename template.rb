@@ -59,8 +59,7 @@ gem "dotenv_validator"
 initializer '1_dotenv_validator.rb', "DotenvValidator.check!"
 
 # pagination
-gem "pagy", "~> 3.8"
-
+gem "pagy"
 
 # DO THIS AFTER ALL GEMS ARE SET
 # Replace 'string' with "string" in the Gemfile so RuboCop is happy
@@ -267,6 +266,10 @@ end
 
 # Stop spring to clear the preloded cache 
 run "bundle exec spring stop"
+
+# Fix Rubocop Offences
+gsub_file("config/environments/development.rb", "Rails.root.join\('tmp', 'caching-dev.txt'\).exist\?", 'Rails.root.join("tmp/caching-dev.txt").exist?')
+run "rubocop -A"
 
 # Show a message to the developer for code editor linter config
 puts "#####################"
